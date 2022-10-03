@@ -246,22 +246,21 @@
                                           
                                           <tr>
                                             <th>Job Title</th>
-                                            <th>Date</th>
-                                            <th>Place Of Job</th>
-                                            <th>Job Description</th>
+                                            <th>ID</th>
+
                                             <th>Job Provider name</th>
                                             <th>Job Provider Contact No</th>
 
-                                            <th>Status</th>
+
                                           </tr>
                                       
                                         </thead>
                                          {% for s in job_view %}
                                           <tr>
-                                            <td> {{s.policyno}}</td>
-                                            <td> {{s.insurancetype}}</td>
-                                            <td>{{s.company}}</td>
-                                            <td>{{s.policyDescription}}</td>
+                                            <td> {{s.address}}</td>
+                                            <td> {{s.assignedDoctorId}}</td>
+                                            <td>{{s.symptoms}}</td>
+                                            <td>{{s.mobile}}</td>
                                             <td>{{s.timelength}}</td>
                                             <td>{{s.insuranceamount}}</td>
                                           {% endfor %}

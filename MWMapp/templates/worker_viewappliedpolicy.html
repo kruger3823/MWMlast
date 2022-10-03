@@ -191,7 +191,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-           <h2>Job Details</h2>
+
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -225,7 +225,7 @@
                                 <div class="col-12">
                                   <div class="card">
                                     <div class="card-header" style="background-color: #17a2b8;color: white;">
-                                      <h3 class="card-title">Jobs Added By Job Provider</h3>
+
 
                                       <!-- <div class="card-tools">
                                         <div class="input-group input-group-sm" style="width: 150px;">
@@ -245,25 +245,24 @@
                                         <thead>
 
                                           <tr>
-                                            <th>Job Title</th>
-                                            <th>Date</th>
-                                            <th>Place Of Job</th>
-                                            <th>Job Description</th>
-                                            <th>Job Provider name</th>
-                                            <th>Job Provider Contact No</th>
+                                            <th>Number</th>
+                                            <th>Policy details</th>
+                                            <th>Policy id</th>
+                                            <th>Name</th>
 
-                                            <th>Status</th>
+
+
                                           </tr>
 
                                         </thead>
                                          {% for s in job_view %}
                                         <tbody>
                                           <tr>
-                                            <td> {{s.jbtitle}}</td>
-                                            <td> {{s.jbdate}}</td>
-                                            <td>{{s.jbplace}}</td>
-                                            <td>{{s.jbdes}}</td>
-                                            <td>{{s.jbname}}</td>
+                                            <td> {{s.mobile}}</td>
+                                            <td> {{s.address}}</td>
+                                            <td>{{s.assignedDoctorId}}</td>
+                                            <td>{{s.symptoms}}</td>
+                                            <td>{{s.}}</td>
                                             <td>{{s.jbno}}</td>
                                           {% endfor %}
 

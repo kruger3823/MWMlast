@@ -4,6 +4,15 @@ from django.shortcuts import render,redirect
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from . import models
+from django.shortcuts import render, redirect,reverse
+from django.contrib.auth.models import Group
+from django.http import HttpResponseRedirect
+
+# Create your views here.
+from . import forms, models
+from .forms import WorkerForm
+from .models import Worker
+
 from . import *
 from .forms import ProductForm
 from .models import Product
@@ -14,6 +23,343 @@ from django.core.files.storage import FileSystemStorage
 
 
 # Create your views here.
+
+def registerUserpage(request):
+    userForm= WorkerUserForm()
+    workerForm= WorkerForm()
+    mydict={'userForm':userForm,'workerForm':workerForm}
+    if request.method=='POST':
+        userForm= WorkerUserForm(request.POST)
+        customerForm= WorkerForm(request.POST, request.FILES)
+        if userForm.is_valid() and customerForm.is_valid():
+            user=userForm.save()
+            user.set_password(user.password)
+            user.save()
+            print(user)
+            worker=customerForm.save(commit=True)
+            worker.user=user
+            worker.save()
+            print(worker)
+            my_worker_group = Group.objects.get_or_create(name='WORKER')
+            my_worker_group[0].user_set.add(user)
+        return redirect('/workerlogin')
+    return render(request,'workersignup.html',context=mydict)
+
+
+
+
+def updateworker(request):
+    print("hey",request.user.id)
+    user = models.User.objects.get(id=request.user.id)
+    userForm=WorkerUserForm(instance=user)
+    mydict={'userForm':userForm}
+    if request.method=='POST':
+        userForm=WorkerUserForm(request.POST,instance=user)
+
+        if userForm.is_valid():
+            print("working")
+            user=userForm.save(commit=True)
+            user.set_password(user.password)
+            user.save()
+
+
+            return redirect('workerdash/')
+    return render(request,'workersignup.html',context=mydict)
+
+
+def regjobproviderpage(request):
+    userForm= JbUserForm()
+    workerForm= JbForm()
+    mydict={'userForm':userForm,'workerForm':workerForm}
+    if request.method=='POST':
+        userForm= JbUserForm(request.POST)
+        customerForm= JbForm(request.POST, request.FILES)
+        if userForm.is_valid() and customerForm.is_valid():
+            user=userForm.save()
+            user.set_password(user.password)
+            user.save()
+            print(user)
+            worker=customerForm.save(commit=True)
+            worker.user=user
+            worker.save()
+            print(worker)
+            my_worker_group = Group.objects.get_or_create(name='JB')
+            my_worker_group[0].user_set.add(user)
+        return HttpResponseRedirect('/workerlogin')
+    return render(request,'workersignup.html',context=mydict)
+
+def updatejb(request):
+    print("hey",request.user.id)
+    user = models.User.objects.get(id=request.user.id)
+    userForm=JbUserForm(instance=user)
+    mydict={'userForm':userForm}
+    if request.method=='POST':
+        userForm=JbUserForm(request.POST,instance=user)
+
+        if userForm.is_valid():
+            print("working")
+            user=userForm.save(commit=True)
+            user.set_password(user.password)
+            user.save()
+
+
+            return redirect('jbdash/')
+    return render(request,'workersignup.html',context=mydict)
+
+
+def reginsurancepage(request):
+    userForm= InsuranceUserForm()
+    workerForm= InsuranceForm()
+    mydict={'userForm':userForm,'workerForm':workerForm}
+    if request.method=='POST':
+        userForm= InsuranceUserForm(request.POST)
+        customerForm= InsuranceForm(request.POST, request.FILES)
+        if userForm.is_valid() and customerForm.is_valid():
+            user=userForm.save()
+            user.set_password(user.password)
+            user.save()
+            print(user)
+            worker=customerForm.save(commit=True)
+            worker.user=user
+            worker.save()
+            print(worker)
+            my_worker_group = Group.objects.get_or_create(name='INSURANCE')
+            my_worker_group[0].user_set.add(user)
+        return redirect('workerlogin')
+    return render(request,'workersignup.html',context=mydict)
+
+def updatein(request):
+    print("hey",request.user.id)
+    user = models.User.objects.get(id=request.user.id)
+    userForm=InsuranceUserForm(instance=user)
+    mydict={'userForm':userForm}
+    if request.method=='POST':
+        userForm=InsuranceUserForm(request.POST,instance=user)
+
+        if userForm.is_valid():
+            print("working")
+            user=userForm.save(commit=True)
+            user.set_password(user.password)
+            user.save()
+
+
+            return redirect('insurance_dash/')
+    return render(request,'workersignup.html',context=mydict)
+
+
+
+def is_police(user):
+    return user.groups.filter(name='ADMIN').exists()
+def is_worker(user):
+    return user.groups.filter(name='WORKER').exists()
+def is_jb(user):
+    return user.groups.filter(name='JB').exists()
+def is_insurance(user):
+    return user.groups.filter(name='INSURANCE').exists()
+
+def afterlogin_view(request):
+    if is_police(request.user):
+        return redirect('police_dash')
+    elif is_worker(request.user):
+        accountapproval=models.Worker.objects.all().filter(user_id=request.user.id,status=True)
+        if accountapproval:
+            return redirect('workerdash')
+        else:
+            return render(request,'ef_wait_for_approval.html')
+    elif is_jb(request.user):
+        accountapproval=models.Jb.objects.all().filter(user_id=request.user.id,status=True)
+        if accountapproval:
+            return redirect('jbdash')
+        else:
+            return render(request,'ef_wait_for_approval.html')
+    elif is_insurance(request.user):
+        accountapproval=models.Insurance.objects.all().filter(user_id=request.user.id,status=True)
+        if accountapproval:
+            return redirect('insurance_dash')
+        else:
+            return render(request,'ef_wait_for_approval.html')
+
+
+def admin_approve_worker(request):
+    #those whose approval are needed
+    doctors=models.Worker.objects.all().filter(status=False)
+    return render(request,'admin_approve_worker.html',{'doctors':doctors})
+
+def admin_approve_jb(request):
+    #those whose approval are needed
+    doctors=models.Jb.objects.all().filter(status=False)
+    return render(request,'admin_approve_jb.html',{'doctors':doctors})
+
+def admin_approve_insurance(request):
+    #those whose approval are needed
+    doctors=models.Insurance.objects.all().filter(status=False)
+    return render(request,'admin_approve_insurance.html',{'doctors':doctors})
+
+
+
+
+def approveworkers(request,id):
+    prod = Worker.objects.get(pk=id)
+    prod.status = True
+    prod.save()
+    return redirect(reverse('approve-worker'))
+
+def approvejb(request,id):
+    prod = Jb.objects.get(pk=id)
+    prod.status = True
+    prod.save()
+    return redirect(reverse('approve-jb'))
+
+
+def approveinsurance(request,id):
+    prod = Insurance.objects.get(pk=id)
+    prod.status = True
+    prod.save()
+    return redirect(reverse('approve-insurance'))
+
+
+
+def jobapply(request):
+
+    patientForm=PatientForm()
+    mydict={'patientForm':patientForm}
+    if request.method=='POST':
+        print("hi")
+        patientForm=PatientForm(request.POST,request.FILES)
+        if patientForm.is_valid():
+            print("hi")
+            patient=patientForm.save(commit=False)
+            patient.assignedDoctorId=request.POST.get('assignedDoctorId')
+            patient.save()
+
+        return render(request,'patientsignup.html',context=mydict)
+    return render(request,'patientsignup.html',context=mydict)
+
+
+def jbapplyview(request):
+    patients=models.Patient.objects.all().filter(status=False,assignedDoctorId=request.user.id)
+    return render(request,'jobapplyview.html',{'patients':patients})
+
+
+
+
+def applyinsurance(request):
+
+    patientForm=PatientForm1()
+    mydict={'patientForm':patientForm}
+    if request.method=='POST':
+        print("hi")
+        patientForm=PatientForm1(request.POST,request.FILES)
+        if patientForm.is_valid():
+            print("hi")
+            patient=patientForm.save(commit=False)
+            patient.assignedDoctorId=request.POST.get('assignedDoctorId')
+            patient.save()
+
+        return render(request,'patientsignup.html',context=mydict)
+    return render(request,'patientsignup.html',context=mydict)
+
+
+def insuranceapplyview(request):
+    patients=models.Patient1.objects.all().filter(status=False,assignedDoctorId=request.user.id)
+    return render(request,'jobapplyview.html',{'patients':patients})
+
+
+
+
+def workerfitapply(request):
+    patients=models.Product.objects.all().filter(status=False)
+    return render(request,'fitnessapplyview.html',{'patients':patients})
+
+
+
+def approvefitness(request,id):
+    prod = Product.objects.get(pk=id)
+    prod.status = True
+    prod.save()
+    return redirect('police_dash')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -123,40 +469,10 @@ def home1(request):
 # ------worker------
 
  #  worker register page
-def regworker(request):
-    if request.method=="POST":
-        username=request.POST.get('username')
-        email=request.POST.get('email')
-        dob=request.POST.get('dob')
-        gender=request.POST.get('gender')
-        no=request.POST.get('no')
-        password=request.POST.get('password')
-        password2=request.POST.get('password2')
 
-        worker(username=username,email=email,dob=dob,gender=gender,no=no,password=password,password2=password2).save(commit=False)
-        worker.status = True
-        worker.save()
-        return redirect('login')
-    else:
-        return render(request,'regworker.html')
 
 # -----additional info-----worker dashboard
-def worker_profile(request):
-    if request.method=="POST":
-        place1=request.POST.get('place1')
-        address1=request.POST.get('address1')
-        address2=request.POST.get('address2')
-        wages1=request.POST.get('wages1')
-        pan1=request.POST.get('pan1')
-        gpay1=request.POST.get('gpay1')
-        photo1=request.POST.get('photo1')
 
-        user = worker.objects.get(id=request.session['id'])
-
-        additionalinfo1(worker=user,place1=place1,address1=address1,address2=address2,wages1=wages1,pan1=pan1,gpay1=gpay1,photo1=photo1).save()
-        # cr=additionalinfo1.objects.all()
-        # cr1=worker.objects.all()
-    return render(request,'worker_profile.html')  
 
   # -----additional info----- worker dashboard   
 
@@ -542,12 +858,12 @@ def jb_changepass(request):
     return render(request,'jb_changepass.html')
 
 def worker_viewappliedjob(request):
-    job_view = applyjobs.objects.all()  # .filter(status=True)
+    job_view = Patient.objects.all().filter()
     return render(request, 'worker_viewappliedjob.html', {'job_view': job_view})
 
 
 def worker_viewappliedpolicy(request):
-    job_view = insurance_scheme1.objects.all()  # .filter(status=True)
+    job_view = Patient1.objects.all().filter()  # .filter(status=True)
     return render(request, 'worker_viewappliedpolicy.html', {'job_view': job_view})
 
 
@@ -572,6 +888,35 @@ def jb_viewaddedjob1(request):
 def jb_viewaddedjob2(request):
     job_view = insurance_scheme.objects.all()  # .filter(status=True)
     return render(request,'jb_viewaddedjob2.html',{'job_view': job_view})
+
+def worker_viewcomp(request):
+    job_view = complaintworker.objects.all()  # .filter(status=True)
+    return render(request,'complaintsub.html',{'job_view': job_view})
+
+def worker_viewcompjb(request):
+    job_view = complaintjb.objects.all()  # .filter(status=True)
+    return render(request,'complaintsubJB.html',{'job_view': job_view})
+
+def worker_viewcompin(request):
+    job_view = complaintin.objects.all()  # .filter(status=True)
+    return render(request,'complaintsubin.html',{'job_view': job_view})
+
+
+def workerview(request):
+    job_view = Worker.objects.all()  # .filter(status=True)
+    return render(request,'adminworkerview.html',{'job_view': job_view})
+
+def jbview(request):
+    job_view = Jb.objects.all()  # .filter(status=True)
+    return render(request,'adminjbview.html',{'job_view': job_view})
+
+def inview(request):
+    job_view = Insurance.objects.all()  # .filter(status=True)
+    return render(request,'adminjbview.html',{'job_view': job_view})
+
+
+
+
 
 def logout(request):
     return render(request,'index.html')
@@ -622,6 +967,31 @@ def addProduct(request):
     return render(request, 'worker_fitness.html', context)
 
 
+
+
+def apply(request):
+
+    patientForm=forms.PatientForm()
+    mydict={'patientForm':patientForm}
+    if request.method=='POST':
+
+        patientForm=forms.PatientForm(request.POST,request.FILES)
+        if patientForm.is_valid():
+            patient=patientForm.save(commit=False)
+            patient.assignedDoctorId=request.POST.get('assignedDoctorId')
+            patient.save()
+
+        return render(request,'patientsignup.html',context=mydict)
+    return render(request,'patientsignup.html',context=mydict)
+
+def appliedjob_view(request):
+    #for three cards
+    patientcount=models.worker.objects.all().filter(status=True,assignedDoctorId=request.user.id).count()
+
+    mydict={
+    'patientcount':patientcount,
+    }
+    return render(request,'hospital/doctor_dashboard.html',context=mydict)
 
 
 

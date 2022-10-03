@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>home</title>
+</head>
+<body background="{% static 'images/image11.jpg' %}">
+
+<h1 align="center" style="color:black;">
+    <table>
+        <tr>
+          <th>fitness</th>
+          <th>Adhar</th>
+          <th>Eye</th>
+          <th>approve</th>
+         
+        </tr>
+        <tr>
+            {% for i in approve %}
+     <td>
+            {{i.user}}
+        </td>
+           <td>
+            {{i.profile_pic}}
+        </td>
+            <td>
+            {{i.address}}
+        </td>
+            <td>
+            {{i.mobile}}
+        </td>
+
+        <td>
+            {{i.status}}
+        </td>
+        <td><a  style="color:red; text-decoration:none;font-size:25px;" href="{% url 'approve-worker' i.id%}">&#10004;</a></td>
+                {% endfor %}
+        </tr>
+      </table>
+      
+</h1>
+<br><br><br>
+
+</body>
+</html>

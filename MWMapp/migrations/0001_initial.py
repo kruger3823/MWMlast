@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
             name='fitnessreport',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(blank=True, null=True, upload_to='media/')),
+                ('image', models.ImageField(blank=True, null=True, upload_to='static/')),
             ],
         ),
         migrations.CreateModel(
