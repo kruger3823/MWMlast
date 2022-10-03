@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Nurse Care</title>
+
+
+  <style type="text/css">
+      body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(to right, #c28e8e, #83a9d6)
+}
+    .box {
+    border-radius: 20px;
+    width: 500px;
+    padding: 40px;
+    position: absolute;
+    top: 100px;
+    left: 500px;
+    background: rgb(199, 198, 198);
+    box-shadow: 0 14px 28px gray,
+            0 10px 10px gray;
+
+    text-align: center;
+    transition: 0.25s;
+    margin-top: 50px
+}
+.box input[type="text"],
+.box input[type="password"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #0f1011;
+    padding: 10px 10px;
+    width: 250px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s
+}
+.box h1 {
+    color: rgb(218, 140, 140);
+    text-transform: uppercase;
+    font-weight: 500
+}
+    a:link {
+      text-decoration: none;
+    }
+
+    .note {
+      text-align: center;
+      height: 80px;
+      background: -webkit-linear-gradient(left, #c7cbcf, #c1939c);
+      color: rgb(24, 21, 21);
+      font-weight: bold;
+      line-height: 80px;
+    }
+
+    .form-content {
+      padding: 5%;
+      border: 1px solid rgb(27, 25, 25);
+      margin-bottom: 2%;
+    }
+
+    .form-control {
+      border-radius: 1.5rem;
+    }
+
+    .btnSubmit {
+      border: 2px solid black;
+      border-radius: 1.5rem;
+      padding: 1%;
+      width: 40%;
+      cursor: pointer;
+      background: gray;
+      color: rgb(29, 26, 26);
+    }
+    .btnSubmit:hover{
+        background:white;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <br>
+  <br>
+  <br><br>
+
+
+  <form class="box" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="container register-form">
+      <div class="form">
+        <h1>LOGIN</h1>
+        </div>
+
+        <div class="form-content">
+          <div class="row">
+            <div class="col-md-6">
+
+              <div class="form-group">
+                {% render_field form.username class="form-control" placeholder="Username" %}
+              </div>
+
+            </div>
+            <div class="col-md-6">
+
+              <div class="form-group">
+                {% render_field form.password class="form-control" placeholder="Password" %}
+              </div>
+
+            </div>
+          </div>
+          <button type="submit" class="btnSubmit">Login</button>
+          <div class="text-center">Do not have account? <a href="doctorsignup">Signup here</a></div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+  <br><br><br>
+
+
+
+</body>
+
+</html>

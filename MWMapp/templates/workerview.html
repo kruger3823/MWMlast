@@ -1,0 +1,290 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WORKER | view_job</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+</head>
+<body class="hold-transition sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <!-- <a href="/index3" class="brand-link"> -->
+      <!-- <img src="../../dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> -->
+      <!-- <span class="brand-text font-weight-light">WORKER</span> -->
+    <!-- </a> -->
+
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active"  style="background-color: #17a2b8">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <!-- <li class="nav-item">
+                <a href="/worker_profile" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Profile</p>
+                </a>
+              </li> -->
+
+              <!-- -------- -->
+              <li class="nav-item menu-open">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    Profile
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/jb_viewprof" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View Profile</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Edit Profile</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/jb_changepass" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Change Password</p>
+                </a>
+              </li>
+              <!-- <li class="nav-item">
+                <a href="pages/charts/uplot.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>uPlot</p>
+                </a>
+              </li> -->
+            </ul>
+          </li>
+
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>
+                Jobs
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="/jb_addjob" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Add Jobs</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/jb_viewaddedjob" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>View Added Jobs</p>
+            </a>
+          </li>
+
+
+        </ul>
+      </li>
+
+          <!-- ------- -->
+
+
+              <!-- <li class="nav-item">
+                <a href="/worker_viewprof" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View Profile</p>
+                </a>
+              </li> -->
+
+              <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Job Application</p>
+                </a>
+              </li>
+
+
+
+
+
+              <li class="nav-item">
+                <a href="/worker_complaint" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Complaints</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+           <h2>Job Details</h2>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="">Home</a></li>
+              <li class="breadcrumb-item active">Profile</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+
+    <section class="content">
+
+
+
+
+
+
+
+                <!-- <div class="row"> -->
+
+                    <!-- <div class="row"> -->
+
+                        <div class="col-md-12">
+                          <div style="overflow-x:auto;">
+                            <form action="" >
+                              {% csrf_token %}
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="card">
+                                    <div class="card-header" style="background-color: #17a2b8;color: white;">
+                                      <h3 class="card-title">Jobs Added By Job Provider</h3>
+
+                                      <!-- <div class="card-tools">
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                          <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                          <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default">
+                                              <i class="fas fa-search"></i>
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div> -->
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body table-responsive p-0">
+                                      <table class="table table-hover text-nowrap">
+                                        <thead>
+
+                                          <tr>
+                                            <th>Job Title</th>
+                                            <th>Date</th>
+                                            <th>Place Of Job</th>
+                                            <th>Job Description</th>
+                                            <th>Job Provider name</th>
+                                            <th>Job Provider Contact No</th>
+
+                                          </tr>
+
+                                        </thead>
+                                        {% for s in job_view %}
+                                          <tr>
+                                            <td> {{s.jbtitle}}</td>
+                                            <td> {{s.jbdate}}</td>
+                                            <td>{{s.jbplace}}</td>
+                                            <td>{{s.jbdes}}</td>
+                                            <td>{{s.jbname}}</td>
+                                            <td>{{s.jbno}}</td>
+                                          {% endfor %}
+
+                                          </tr>
+
+
+                                      </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                  </div>
+                                  <!-- /.card -->
+                                </div>
+                              </div>
+                          </form>
+                          </div>
+                    </div>
+
+                  <!-- </div> -->
+
+
+    </section>
+
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+
+  <!-- Control Sidebar -->
+  <!-- <aside class="control-sidebar control-sidebar-dark"> -->
+    <!-- Control sidebar content goes here -->
+  <!-- </aside> -->
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dist/js/demo.js' %}"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

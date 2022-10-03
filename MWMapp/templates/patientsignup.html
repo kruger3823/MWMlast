@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>LazyCoder || sumit</title>
+  <style type="text/css">
+     body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(to right, #e98787, #e3e7ed)
+}
+    .box {
+    border-radius: 20px;
+    width: 500px;
+    padding: 40px;
+    position: absolute;
+    top: 30px;
+    left: 480px;
+    background: rgb(199, 198, 198);
+    box-shadow: 0 14px 28px gray,
+            0 10px 10px gray;
+
+    text-align: center;
+    transition: 0.25s;
+    margin-top: 20px
+}
+.box input[type="text"],
+.box input[type="password"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #0f1011;
+    padding: 10px 10px;
+    width: 250px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s
+}
+.box h1 {
+    text-align: center;
+    color: rgb(194, 21, 21);
+    text-transform: uppercase;
+    font-weight: 500
+}
+    a:link {
+      text-decoration: none;
+    }
+
+    .note {
+      text-align: center;
+      height: 80px;
+      background: -webkit-linear-gradient(left, #0072ff, #8811c5);
+      color: #fff;
+      font-weight: bold;
+      line-height: 80px;
+    }
+
+    .form-content {
+      padding: 5%;
+      border: 1px solid #ced4da;
+      margin-bottom: 2%;
+    }
+
+    .form-control {
+      border-radius: 1.5rem;
+    }
+
+    .btnSubmit {
+      border: 2px solid black;
+      border-radius: 1.5rem;
+      padding: 1%;
+      width: 40%;
+      cursor: pointer;
+      background:-webkit-linear-gradient(left, #7c64cd, #c7b6d0);
+      color: white;
+    }
+    .btnSubmit:hover{
+        background:-webkit-linear-gradient(left, #919092,white);
+        color: black
+    }
+  </style>
+
+</head>
+
+
+<body>
+
+  <br>
+  <br>
+  <br>
+  <br>
+
+
+
+
+  <form class="box" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="container register-form">
+      <div class="form">
+
+          <h1> Application form</h1>
+
+
+        <div class="form-content">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                {% render_field userForm.first_name class="form-control" placeholder="First Name" %}
+              </div>
+              <div class="form-group">
+                {% render_field userForm.username class="form-control" placeholder="Username" %}
+              </div>
+              <div class="form-group">
+                {% render_field patientForm.address class="form-control" placeholder="Apply Details" %}
+              </div>
+              <div class="form-group">
+                {% render_field patientForm.symptoms class="form-control" placeholder="Name" %}
+              </div>
+              <div class="form-group">
+                {% render_field patientForm.profile_pic required="required" class="form-control" placeholder="Profile Picture" %}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
+              </div>
+              <div class="form-group">
+                {% render_field userForm.password class="form-control" placeholder="Password" %}
+              </div>
+              <div class="form-group">
+                {% render_field patientForm.mobile class="form-control" pattern="[6789][0-9]{9}" placeholder="Mobile Number" %}
+              </div>
+              <div class="form-group">
+                {% render_field patientForm.assignedDoctorId class="form-control" placeholder="Name" %}
+
+
+
+
+              </div>
+
+            </div>
+          </div>
+          <button type="submit" class="btnSubmit">Register</button>
+          <div class="text-center">Already have an account? <a href="patientlogin">Login here</a></div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+
+  <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBo95h8IMCTTIqccztDJF3LmLN7fRcassA&libraries=geometry,places&callback=initMap">
+</script>
+</body>
+
+
+</html>
